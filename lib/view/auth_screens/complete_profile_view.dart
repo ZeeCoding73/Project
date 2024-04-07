@@ -1,5 +1,5 @@
 import 'package:fitness/common/colo_extension.dart';
-import 'package:fitness/view/login/what_your_goal_view.dart';
+import 'package:fitness/view/auth_screens/what_your_goal_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../common_widget/round_button.dart';

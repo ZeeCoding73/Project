@@ -1,7 +1,8 @@
-
 import 'package:fitness/common_widget/workout_row.dart';
+import 'package:fitness/controllers/auth_controller.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../common/colo_extension.dart';
 
@@ -82,7 +83,7 @@ class _HomeViewState extends State<HomeView> {
     {"title": "2pm - 4pm", "subtitle": "700ml"},
     {"title": "4pm - now", "subtitle": "900ml"},
   ];
-
+  AuthController authController = Get.find();
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -107,12 +108,12 @@ class _HomeViewState extends State<HomeView> {
       ),
     ];
 
-   final tooltipsOnBar = lineBarsData[0];
+    final tooltipsOnBar = lineBarsData[0];
 
     return Scaffold(
       backgroundColor: TColor.white,
-      body: SingleChildScrollView(
-        child: SafeArea(
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
@@ -129,7 +130,9 @@ class _HomeViewState extends State<HomeView> {
                           style: TextStyle(color: TColor.gray, fontSize: 12),
                         ),
                         Text(
-                          "Zeeshan",
+                          authController.firestoreUser.value != null
+                              ? authController.firestoreUser.value!.name
+                              : '...',
                           style: TextStyle(
                               color: TColor.black,
                               fontSize: 20,
@@ -157,15 +160,12 @@ class _HomeViewState extends State<HomeView> {
                 SizedBox(
                   height: media.width * 0.05,
                 ),
-
                 SizedBox(
                   height: media.width * 0.05,
                 ),
-
                 SizedBox(
                   height: media.width * 0.05,
                 ),
-
                 SizedBox(
                   height: media.width * 0.05,
                 ),
