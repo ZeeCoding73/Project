@@ -1,4 +1,6 @@
+import 'package:fitness/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../common/colo_extension.dart';
 import '../../common_widget/round_button.dart';
@@ -15,7 +17,7 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   bool positive = false;
-
+  AuthController authController = Get.find();
   List accountArr = [
     {"image": "assets/img/p_personal.png", "name": "Personal Data", "tag": "1"},
     {"image": "assets/img/p_achi.png", "name": "Achievement", "tag": "2"},
@@ -51,7 +53,9 @@ class _ProfileViewState extends State<ProfileView> {
         ),
         actions: [
           InkWell(
-            onTap: () {},
+            onTap: () {
+              authController.signOut();
+            },
             child: Container(
               margin: const EdgeInsets.all(8),
               height: 40,
@@ -60,12 +64,13 @@ class _ProfileViewState extends State<ProfileView> {
               decoration: BoxDecoration(
                   color: TColor.lightGray,
                   borderRadius: BorderRadius.circular(10)),
-              child: Image.asset(
-                "assets/img/more_btn.png",
-                width: 15,
-                height: 15,
-                fit: BoxFit.contain,
-              ),
+              child: Icon(Icons.logout),
+              // Image.asset(
+              //   "assets/img/more_btn.png",
+              //   width: 15,
+              //   height: 15,
+              //   fit: BoxFit.contain,
+              // ),
             ),
           )
         ],
@@ -79,13 +84,28 @@ class _ProfileViewState extends State<ProfileView> {
             children: [
               Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.asset(
-                      "assets/img/u2.png",
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.circular(30),
+                  //   child:
+                  // Image.asset(
+                  //   "assets/img/u2.png",
+                  //   width: 50,
+                  //   height: 50,
+                  //   fit: BoxFit.cover,
+                  // ),
+                  // ),
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(30),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          authController.firestoreUser.value!.photoUrl ??
+                              authController.firestoreUser.value!.dummyPhotoUrl,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -96,7 +116,7 @@ class _ProfileViewState extends State<ProfileView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Zeeshan",
+                          authController.firestoreUser.value!.name,
                           style: TextStyle(
                             color: TColor.black,
                             fontSize: 14,
@@ -273,11 +293,10 @@ class _ProfileViewState extends State<ProfileView> {
                                     Positioned(
                                         left: 10.0,
                                         right: 10.0,
-                                        
                                         height: 30.0,
                                         child: DecoratedBox(
                                           decoration: BoxDecoration(
-                                             gradient: LinearGradient(
+                                            gradient: LinearGradient(
                                                 colors: TColor.secondaryG),
                                             borderRadius:
                                                 const BorderRadius.all(
@@ -352,7 +371,7 @@ class _ProfileViewState extends State<ProfileView> {
                           onPressed: () {},
                         );
                       },
-                    )
+                    ),
                   ],
                 ),
               )
